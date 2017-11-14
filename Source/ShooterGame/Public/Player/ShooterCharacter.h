@@ -5,6 +5,11 @@
 #include "ShooterTypes.h"
 #include "ShooterCharacter.generated.h"
 
+<<<<<<< HEAD
+=======
+class UCinematicCamera;
+
+>>>>>>> 51c9672575e3eda7f4e5cb86d69c1bfbf34462ab
 UCLASS(Abstract)
 class AShooterCharacter : public ACharacter
 {

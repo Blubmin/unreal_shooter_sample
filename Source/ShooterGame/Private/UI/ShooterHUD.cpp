@@ -539,21 +539,6 @@ void AShooterHUD::DrawHUD()
 		Canvas->ApplySafeZoneTransform();
 	}
 
-	/*if (MyPawn) {
-		float scale = .25f;
-		float x = Canvas->ClipX * scale;
-		float y = Canvas->ClipY * scale;
-		DrawTexture(MyPawn->CinematicCamera->TextureTarget, Canvas->ClipX - x, Canvas->ClipY - y, x, y, 0, 0, 1, 1, FLinearColor::White, BLEND_Opaque);
-		if (!MyPawn->CinematicCamera) {
-			UE_LOG(LogTemp, Log, TEXT("Cam Null"));
-		}
-		else if (!MyPawn->CinematicCamera->TextureTarget) {
-			UE_LOG(LogTemp, Log, TEXT("Target Null"));
-		} else {
-			UE_LOG(LogTemp, Log, TEXT("Hell if I know %d, %d"), MyPawn->CinematicCamera->TextureTarget->GetSurfaceHeight(), MyPawn->CinematicCamera->TextureTarget->GetSurfaceWidth());
-		}
-	}*/
-
 	// net mode
 	if (GetNetMode() != NM_Standalone)
 	{

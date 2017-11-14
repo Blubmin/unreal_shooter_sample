@@ -9,6 +9,10 @@
 #include "Animation/AnimInstance.h"
 #include "Sound/SoundNodeLocalPlayer.h"
 #include "AudioThread.h"
+<<<<<<< HEAD
+=======
+#include "CinematicCamera.h"
+>>>>>>> 51c9672575e3eda7f4e5cb86d69c1bfbf34462ab
 
 #include "PhysicsPublic.h"
 #include "PhysXIncludes.h"
@@ -66,10 +70,18 @@ AShooterCharacter::AShooterCharacter(const FObjectInitializer& ObjectInitializer
 	bWantsToRun = false;
 	bWantsToFire = false;
 	LowHealthPercentage = 0.5f;
+<<<<<<< HEAD
 	bFirstPerson = false;
 
 	BaseTurnRate = 45.f;
 	BaseLookUpRate = 45.f;
+=======
+
+	BaseTurnRate = 45.f;
+	BaseLookUpRate = 45.f;
+
+	CinematicCamera = ObjectInitializer.CreateDefaultSubobject<UCinematicCamera>(this, TEXT("CinematicCamera"));
+>>>>>>> 51c9672575e3eda7f4e5cb86d69c1bfbf34462ab
 }
 
 void AShooterCharacter::PostInitializeComponents()
@@ -1290,7 +1302,11 @@ bool AShooterCharacter::IsFiring() const
 
 bool AShooterCharacter::IsFirstPerson() const
 {
+<<<<<<< HEAD
 	return bFirstPerson || (IsAlive() && Controller && Controller->IsLocalPlayerController());
+=======
+	return IsAlive() && Controller && Controller->IsLocalPlayerController();
+>>>>>>> 51c9672575e3eda7f4e5cb86d69c1bfbf34462ab
 }
 
 int32 AShooterCharacter::GetMaxHealth() const
