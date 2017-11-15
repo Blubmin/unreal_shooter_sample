@@ -5,12 +5,9 @@
 #include "UI/Menu/ShooterDemoPlaybackMenu.h"
 #include "UI/Widgets/SShooterDemoHUD.h"
 #include "Engine/DemoNetDriver.h"
-<<<<<<< HEAD
 #include "ThesisCameraActor.h"
 #include "CinematicCamera.h"
 #include "PlayerCamera.h"
-=======
->>>>>>> 51c9672575e3eda7f4e5cb86d69c1bfbf34462ab
 
 AShooterDemoSpectator::AShooterDemoSpectator(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
