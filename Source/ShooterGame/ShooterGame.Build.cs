@@ -69,35 +69,44 @@ public class ShooterGame : ModuleRules
             }
         );
 
-        //LoadPhysX(Target);
+        LoadEigen(Target);
+        LoadGLog(Target);
+        LoadGFlag(Target);
+        LoadCeres(Target);
     }
 
-    public bool LoadPhysX(TargetInfo Target) {
-        bool isLibrarySupported = false;
-
-        if ((Target.Platform == UnrealTargetPlatform.Win64) || (Target.Platform == UnrealTargetPlatform.Win32)) {
-            isLibrarySupported = true;
-
-            string PlatformString = (Target.Platform == UnrealTargetPlatform.Win64) ? "x64" : "x86";
-            string LibrariesPath = Path.Combine(ThirdPartyPath, "PhysX", "Libraries");
-
-            /*
-            test your path with:
-            using System; // Console.WriteLine("");
-            Console.WriteLine("... LibrariesPath -> " + LibrariesPath);
-            */
-
-            PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "PhysX3DEBUG_" + PlatformString + ".lib"));
-        }
-
-        if (isLibrarySupported) {
-            // Include path
-            PublicIncludePaths.Add(Path.Combine(ThirdPartyPath, "PhysX", "Includes"));
-        }
-
-        Definitions.Add(string.Format("WITH_PHYSX_BINDING={0}", isLibrarySupported ? 1 : 0));
-
-        return isLibrarySupported;
+    public bool LoadEigen(TargetInfo Target) {
+        string EigenPath = Path.Combine(ThirdPartyPath, "Eigen");
+        PublicIncludePaths.Add(EigenPath);
+        return true;
     }
 
+    public bool LoadGLog(TargetInfo Target) {
+        string gLogPath = Path.Combine(ThirdPartyPath, "glog");
+        string LibraryPath = Path.Combine(gLogPath, "Release");
+        Definitions.Add("GLOG_NO_ABBREVIATED_SEVERITIES");
+        Definitions.Add("GOOGLE_GLOG_DLL_DECL=_MBCS");
+        PublicAdditionalLibraries.Add(Path.Combine(LibraryPath, "glog.lib"));
+        PublicIncludePaths.Add(gLogPath);
+        PublicIncludePaths.Add(Path.Combine(gLogPath, "src"));
+        return true;
+    }
+
+    public bool LoadGFlag(TargetInfo Target) {
+        string gFlagPath = Path.Combine(ThirdPartyPath, "gflags");
+        string LibraryPath = Path.Combine(gFlagPath, "lib", "Release");
+        string IncludePath = Path.Combine(gFlagPath, "include");
+        PublicAdditionalLibraries.Add(Path.Combine(LibraryPath, "gflags_static.lib"));
+        PublicIncludePaths.Add(IncludePath);
+        return true;
+    }
+
+    public bool LoadCeres(TargetInfo Target) {
+        string CeresPath = Path.Combine(ThirdPartyPath, "Ceres");
+        string LibraryPath = Path.Combine(CeresPath, "bin", "lib", "Release");
+        string IncludePath = Path.Combine(CeresPath, "include");
+        PublicAdditionalLibraries.Add(Path.Combine(LibraryPath, "ceres.lib"));
+        PublicIncludePaths.Add(IncludePath);
+        return true;
+    }
 }
