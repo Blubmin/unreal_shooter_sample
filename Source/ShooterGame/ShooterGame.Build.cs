@@ -71,8 +71,17 @@ public class ShooterGame : ModuleRules
 
         LoadEigen(Target);
         LoadGLog(Target);
-        LoadGFlag(Target);
         LoadCeres(Target);
+        //LoadTest(Target);
+    }
+
+    public bool LoadTest(TargetInfo Target) {
+        string TestPath = Path.Combine(ThirdPartyPath, "testlib");
+        string IncludePath = Path.Combine(TestPath, "include");
+        string LibraryPath = Path.Combine(TestPath, "x64", "Release");
+        PublicIncludePaths.Add(IncludePath);
+        PublicAdditionalLibraries.Add(Path.Combine(LibraryPath, "testlib.lib"));
+        return true;
     }
 
     public bool LoadEigen(TargetInfo Target) {
@@ -83,12 +92,14 @@ public class ShooterGame : ModuleRules
 
     public bool LoadGLog(TargetInfo Target) {
         string gLogPath = Path.Combine(ThirdPartyPath, "glog");
-        string LibraryPath = Path.Combine(gLogPath, "Release");
+        string LibraryPath = Path.Combine(gLogPath, "build", "Release");
+        string IncludePath = Path.Combine(gLogPath, "build");
         Definitions.Add("GLOG_NO_ABBREVIATED_SEVERITIES");
-        Definitions.Add("GOOGLE_GLOG_DLL_DECL=_MBCS");
-        PublicAdditionalLibraries.Add(Path.Combine(LibraryPath, "glog.lib"));
-        PublicIncludePaths.Add(gLogPath);
-        PublicIncludePaths.Add(Path.Combine(gLogPath, "src"));
+        Definitions.Add("GOOGLE_GLOG_DLL_DECL=");
+        string lib = Path.Combine(LibraryPath, "glog.lib");
+        PublicLibraryPaths.Add(LibraryPath);
+        PublicAdditionalLibraries.Add("glog.lib");
+        PublicIncludePaths.Add(IncludePath);
         return true;
     }
 
@@ -103,10 +114,13 @@ public class ShooterGame : ModuleRules
 
     public bool LoadCeres(TargetInfo Target) {
         string CeresPath = Path.Combine(ThirdPartyPath, "Ceres");
-        string LibraryPath = Path.Combine(CeresPath, "bin", "lib", "Release");
+        string LibraryPath = Path.Combine(CeresPath, "build", "lib", "Release");
         string IncludePath = Path.Combine(CeresPath, "include");
-        PublicAdditionalLibraries.Add(Path.Combine(LibraryPath, "ceres.lib"));
+        //string MiniglogPath = Path.Combine(CeresPath, "internal", "ceres", "miniglog");
+        PublicLibraryPaths.Add(LibraryPath);
+        PublicAdditionalLibraries.Add("ceres.lib");
         PublicIncludePaths.Add(IncludePath);
+        //PublicIncludePaths.Add(MiniglogPath);
         return true;
     }
 }

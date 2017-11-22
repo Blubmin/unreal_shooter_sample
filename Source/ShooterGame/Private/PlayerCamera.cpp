@@ -25,7 +25,6 @@ void APlayerCamera::Tick(float DeltaTime) {
 	Target->GetActorEyesViewPoint(position, rotation);
 	GetCameraComponent()->SetRelativeLocationAndRotation(position, rotation);
 
-
 	double initial_x = 5.0;
 	double x = initial_x;
 	// Build the problem.
@@ -44,5 +43,5 @@ void APlayerCamera::Tick(float DeltaTime) {
 	ceres::Solver::Summary summary;
 	ceres::Solve(options, &problem, &summary);
 
-	UE_LOG(LogTemp, Log, TEXT("x : %d -> %d"), initial_x, x);
+	UE_LOG(LogTemp, Log, TEXT("x : %lf -> %lf"), initial_x, x);
 }

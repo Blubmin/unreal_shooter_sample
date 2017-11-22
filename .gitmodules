@@ -1,9 +1,6 @@
-[submodule "ThirdParty/gflags"]
-	path = ThirdParty/gflags
-	url = git@github.com:Blubmin/gflags.git
 [submodule "ThirdParty/Ceres"]
 	path = ThirdParty/Ceres
 	url = git@github.com:ceres-solver/ceres-solver.git
-[submodule "ThirdParty/glog"]
+[submodule "ThirdParty/glob"]
 	path = ThirdParty/glog
-	url = git@github.com:Blubmin/glog.git
+	url = https://github.com/Blubmin/glog
