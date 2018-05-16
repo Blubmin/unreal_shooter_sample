@@ -389,6 +389,10 @@ private:
 	// Damage & death
 
 public:
+
+	/** Returns the intersectiing character with the smallest view angle between the forward vector and their position **/
+	AShooterCharacter* GetTopCandidate();
+
 	/** Identifies if pawn is in its dying state */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Health)
 	uint32 bIsDying : 1;

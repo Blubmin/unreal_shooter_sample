@@ -13,10 +13,8 @@ class SHOOTERGAME_API AThesisCameraActor : public ACameraActor
 {
 	GENERATED_BODY()
 
-protected:
-	TWeakObjectPtr<AShooterCharacter> Target;
-
 public:
+	TWeakObjectPtr<AShooterCharacter> Target;
 	AThesisCameraActor(const FObjectInitializer& ObjectInitializer);
 	virtual void SetPlayer(TWeakObjectPtr<AShooterCharacter> NewTarget) {};
 };

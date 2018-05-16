@@ -181,6 +181,44 @@ bool AShooterCharacter::IsEnemyFor(AController* TestPC) const
 //////////////////////////////////////////////////////////////////////////
 // Meshes
 
+AShooterCharacter* AShooterCharacter::GetTopCandidate() {
+	TArray<AActor*> candidates;
+	GetOverlappingActors(candidates, TSubclassOf<AShooterCharacter>(AShooterCharacter::StaticClass()));
+	UE_LOG(LogTemp, Log, TEXT("Overlapping size: %d"), candidates.Num());
+
+	FVector forward = GetActorForwardVector();
+	AShooterCharacter* candidate = nullptr;
+	double best_dot = 0;
+
+	for (AActor* actor : candidates) {
+		AShooterCharacter* a = Cast<AShooterCharacter>(actor);
+		if (a == nullptr) UE_LOG(LogTemp, Log, TEXT("a == nullptr"));
+
+		// Check if the viewing angle from the current shooter character to the current character is as low as possible.
+		FVector to_candidate = a->GetActorLocation() - GetActorLocation();
+		to_candidate.Normalize();
+		double dot = FVector::DotProduct(forward, to_candidate);
+
+		if (dot >= 0 && dot > best_dot) {
+			best_dot = dot;
+			candidate = a;
+			continue;
+		}
+
+		// Check if the viewing angle from the candidate to the current shooter character is as low as possible.
+		if (!Cast<AShooterCharacter>(a)->GetController()->LineOfSightTo(this)) continue;
+		FVector candidate_forward = a->GetActorForwardVector();
+		dot = FVector::DotProduct(candidate_forward, -to_candidate);
+
+		if (dot >= 0 && dot > best_dot) {
+			best_dot = dot;
+			candidate = a;
+		}
+	}
+
+	return candidate;
+}
+
 void AShooterCharacter::UpdatePawnMeshes()
 {
 	bool const firstPerson = IsFirstPerson();
@@ -194,6 +232,14 @@ void AShooterCharacter::UpdatePawnMeshes()
 
 void AShooterCharacter::SwapMesh() {
 	bFirstPerson = !bFirstPerson;
+	Mesh1P->SetOnlyOwnerSee(!bFirstPerson);
+	//Mesh1P->SetVisibility(bFirstPerson);
+	//GetMesh()->SetVisibility(!bFirstPerson);
+	GetMesh()->SetOnlyOwnerSee(bFirstPerson);
+	/*Mesh1P->MeshComponentUpdateFlag = !bFirstPerson ? EMeshComponentUpdateFlag::OnlyTickPoseWhenRendered : EMeshComponentUpdateFlag::AlwaysTickPoseAndRefreshBones;
+	Mesh1P->SetOnlyOwnerSee(!bFirstPerson);
+
+	GetMesh()->MeshComponentUpdateFlag = !Mesh1P->MeshComponentUpdateFlag;*/
 }
 
 void AShooterCharacter::UpdateTeamColors(UMaterialInstanceDynamic* UseMID)

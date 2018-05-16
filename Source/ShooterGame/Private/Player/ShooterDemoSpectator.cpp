@@ -32,7 +32,7 @@ void AShooterDemoSpectator::SetupInputComponent()
 	InputComponent->BindAction( "PrevWeapon", IE_Pressed, this, &AShooterDemoSpectator::OnDecreasePlaybackSpeed );
 	InputComponent->BindAction("NextPlayer", IE_Pressed, this, &AShooterDemoSpectator::OnNextPlayer);
 	InputComponent->BindAction("PrevPlayer", IE_Pressed, this, &AShooterDemoSpectator::OnPrevPlayer);
-	InputComponent->BindAction("SwitchCamera", IE_Pressed, this, &AShooterDemoSpectator::OnSwitchCamera);
+	InputComponent->BindAction("ToggleCamera", IE_Pressed, this, &AShooterDemoSpectator::OnSwitchCamera);
 }
 
 void AShooterDemoSpectator::SetPlayer( UPlayer* InPlayer )
@@ -101,19 +101,13 @@ void AShooterDemoSpectator::SetCameraPlayer(int NewIndex) {
 		UE_LOG(LogTemp, Log, TEXT("NO WORLD AHHH"));
 		return;
 	}
-	UE_LOG(LogTemp, Log, TEXT("Start"));
 	TArray<AActor*> ShooterCharacters;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AShooterCharacter::StaticClass(), ShooterCharacters);
-	UE_LOG(LogTemp, Log, TEXT("Array"));
 	if (ShooterCharacters.Num() == 0) return;
-	UE_LOG(LogTemp, Log, TEXT("Idx"));
 	PlayerIdx = ((NewIndex % ShooterCharacters.Num()) + ShooterCharacters.Num()) % ShooterCharacters.Num();
 
-	UE_LOG(LogTemp, Log, TEXT("Cinematic"));
 	CinematicCamera->SetPlayer(TWeakObjectPtr<AShooterCharacter>(Cast<AShooterCharacter>(ShooterCharacters[PlayerIdx])));
-	UE_LOG(LogTemp, Log, TEXT("PLayer"));
 	PlayerCamera->SetPlayer(TWeakObjectPtr<AShooterCharacter>(Cast<AShooterCharacter>(ShooterCharacters[PlayerIdx])));
-	UE_LOG(LogTemp, Log, TEXT("Done"));
 }
 
 void AShooterDemoSpectator::OnNextPlayer() {
